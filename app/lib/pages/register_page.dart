@@ -1,6 +1,8 @@
 import 'package:app/components/button.dart';
 import 'package:app/components/text_input.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../services/auth/auth_service.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? onTap;
@@ -15,6 +17,17 @@ class _RegisterPageState extends State<RegisterPage> {
   // Text editing controllers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  // Sign up function
+  Future<void> signUp() async {
+    final authService = Provider.of<AuthService>(context, listen: false);
+
+    try {
+      await authService.signUpWithEmailAndPassword(emailController.text, passwordController.text);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(height: 25),
     
               // Submit button
-              Button(onTap: (){}, text: 'Submit'),
+              Button(onTap: signUp, text: 'Submit'),
     
               // Blank space
               const SizedBox(height: 25),

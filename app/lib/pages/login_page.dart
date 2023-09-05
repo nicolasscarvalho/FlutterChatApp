@@ -1,6 +1,8 @@
 import 'package:app/components/button.dart';
 import 'package:app/components/text_input.dart';
+import 'package:app/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   final void Function()? onTap;
@@ -15,6 +17,20 @@ class _LoginPageState extends State<LoginPage> {
   // Text editing controllers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  // Sign in function
+  Future<void> signIn () async {
+    final authService = Provider.of<AuthService>(context, listen: false);
+
+    try {
+      await authService.signInWithEmailAndPassword(
+        emailController.text, 
+        passwordController.text
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 25),
     
               // Submit button
-              Button(onTap: (){}, text: 'Submit'),
+              Button(onTap: signIn, text: 'Submit'),
     
               // Blank space
               const SizedBox(height: 25),
