@@ -5,13 +5,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-// import 'package:firebase_core/firebase_core.dart';
-// import 'firebase_options.dart';
-
-// await Firebase.initializeApp(
-//     options: DefaultFirebaseOptions.currentPlatform,
-// );
-
 Future<void> main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +19,7 @@ Future<void> main() async {
     )
 
   );
-  
+
 }
 
 class MainApp extends StatelessWidget {
